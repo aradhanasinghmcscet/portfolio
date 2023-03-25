@@ -20,8 +20,7 @@
     "react-redux": "^6.0.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
-    "redux": "^4.0.4",
-    "typewriter-effect": "^2.19.0"
+    "redux": "^4.0.4"
   },
   "scripts": {
     "start": "react-scripts start",

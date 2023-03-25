@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Typewriter from "typewriter-effect";
+// import Typewriter from "typewriter-effect";
 
 
 // const myidentity = [
@@ -30,7 +30,7 @@ class Home extends Component {
     return (
       <div className='container'>
         <h1>Hello,</h1>
-        <h2 className='welcomeTxt'>Welcome To My Web World!</h2>
+        <h6 className='welcomeTxt'>Welcome To My Web World!</h6>
         <h3>
         I'm Aradhana
           {/* I'm <span className='mytitle'>{textChanges}</span> */}
@@ -48,7 +48,7 @@ class Home extends Component {
        }}
        /> */}
 
-<Typewriter
+{/* <Typewriter
 className="typingText"
   options={{
     strings: ['Aradhana Singh',
@@ -60,8 +60,13 @@ className="typingText"
     autoStart: true,
     loop: true,
   }}
-/>
+/> */}
         </h3>
+        <h6>A Front End Web Developer</h6>
+        <h6>A Blogger</h6>
+        <h6>A Content Creater</h6>
+        <h6>A Youtuber</h6>
+        <h6>An Artist</h6>
         <p>A passionate web developer based in Bangaluru, India.</p>
       </div>
     );
