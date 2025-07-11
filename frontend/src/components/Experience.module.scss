@@ -1,0 +1,69 @@
+.experience {
+  padding: 4rem 2rem;
+  
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+  }
+
+  &__timeline {
+    position: relative;
+    padding: 2rem 0;
+    
+    &:before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      height: 100%;
+      width: 2px;
+      background: var(--primary-color);
+    }
+  }
+
+  &__item {
+    position: relative;
+    margin: 2rem 0;
+    
+    &:nth-child(even) {
+      padding-left: 2rem;
+    }
+
+    &:nth-child(odd) {
+      padding-right: 2rem;
+    }
+
+    &__dot {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 12px;
+      height: 12px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      transform: translateX(-50%);
+    }
+
+    &__date {
+      font-weight: 600;
+      color: #666;
+    }
+
+    &__company {
+      font-size: 1.2rem;
+      margin: 0.5rem 0;
+      color: var(--primary-color);
+    }
+
+    &__description {
+      color: #666;
+      line-height: 1.6;
+    }
+  }
+}

@@ -1,0 +1,47 @@
+.resume {
+  padding: 4rem 2rem;
+  
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+  }
+
+  &__section {
+    margin-bottom: 3rem;
+    
+    &__header {
+      margin-bottom: 1.5rem;
+      
+      &__title {
+        font-size: 1.5rem;
+        color: var(--primary-color);
+      }
+
+      &__date {
+        color: #666;
+      }
+    }
+
+    &__content {
+      &__item {
+        margin-bottom: 1rem;
+        
+        &__title {
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+        }
+
+        &__description {
+          color: #666;
+          line-height: 1.6;
+        }
+      }
+    }
+  }
+}

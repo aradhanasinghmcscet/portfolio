@@ -1,0 +1,97 @@
+.contactContainer {
+  padding: 4rem 2rem;
+  
+  .title {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+  }
+
+  .contactInfo {
+    padding: 2rem;
+    margin-bottom: 2rem;
+    
+    .infoTitle {
+      color: #2c3e50;
+      margin-bottom: 1rem;
+    }
+
+    .infoItems {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      
+      .infoItem {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        
+        .infoIcon {
+          font-size: 1.5rem;
+          color: #3498db;
+        }
+      }
+    }
+  }
+
+  .formContainer {
+    padding: 2rem;
+    
+    .contactForm {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      
+      .formGroup {
+        .textField {
+          &.MuiOutlinedInput-root {
+            .MuiOutlinedInput-notchedOutline {
+              border-color: #ddd;
+            }
+            
+            &:hover {
+              .MuiOutlinedInput-notchedOutline {
+                border-color: #3498db;
+              }
+            }
+            
+            &.Mui-focused {
+              .MuiOutlinedInput-notchedOutline {
+                border-color: #3498db;
+              }
+              
+              .MuiInputLabel-root {
+                color: #3498db;
+              }
+            }
+          }
+        }
+      }
+      
+      .submitButtonContainer {
+        .submitButton {
+          background-color: #3498db;
+          color: white;
+          font-weight: 500;
+          padding: 1rem;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+          
+          &:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding: 2rem 1rem;
+    
+    .contactInfo,
+    .formContainer {
+      padding: 1.5rem;
+    }
+  }
+}

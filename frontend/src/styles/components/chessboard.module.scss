@@ -1,0 +1,366 @@
+.chessboard {
+  width: 100%;
+  max-width: 700px;
+  height: 100%;
+  max-height: 800px;
+  background: #141414; // Titan black color
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  position: relative;
+  margin: 5em auto;
+  padding: 0 5em; // Add horizontal padding
+  border: 4px solid #2d2d2d;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  &__container {
+    width: 100%;
+    max-width: 700px;
+    height: 100%;
+    max-height: 800px;
+    background: #141414; // Titan black color
+    border-radius: 12px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    position: relative;
+    margin: 15em auto;
+    padding: 1em 5em; // Add horizontal padding
+    border: 4px solid #074c6e;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+  }
+  &__header {
+    text-align: center;
+    margin-bottom: 2rem;
+    
+    h2 {
+      font-size: 2.5rem;
+      color: #053342;
+      margin: 0;
+    }
+  }
+
+  &__rating {
+   text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  &__stars {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+  }
+
+  &__row {
+    display: flex;
+    width: 100%;
+    height: 12.5%;
+  }
+
+  &__controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+  }
+
+  &__button {
+    background: #4a4a4a;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+
+    &:hover {
+      background: #666;
+    }
+
+    &--reset {
+      background: #e8e15b;
+      color: #000;
+      
+      &:hover {
+        background: #c4b94a;
+      }
+    }
+
+    &--back {
+      &::before {
+        content: '←';
+      }
+    }
+
+    &--forward {
+      &::before {
+        content: '→';
+      }
+    }
+  }
+
+  &__captured {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    height: 60px;
+
+    &__piece {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      margin: 0.5rem;
+      font-size: 2rem;
+      background: transparent;
+    }
+
+    &--white {
+      display: flex;
+      gap: 0.5rem;
+      margin-right: 1rem;
+    }
+
+    &--black {
+      display: flex;
+      gap: 0.5rem;
+      margin-left: 1rem;
+    }
+
+    &--white,
+    &--black {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      padding: 0.5rem;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      min-height: 40px;
+      overflow: hidden;
+    }
+
+    &--black {
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    &__piece {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      font-size: 1.2rem;
+      font-family: Arial, sans-serif;
+      background: transparent;
+      transition: all 0.3s ease;
+      user-select: none;
+      pointer-events: none;
+      color: #000;
+      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.2);
+    }
+
+    &__piece--black {
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &__grid {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background: #1a1a1a;
+    border-radius: 8px;
+    overflow: visible;
+    gap: 0;
+  }
+
+  &__row {
+    display: flex;
+    flex: 1;
+    gap: 0;
+  }
+
+  &__square {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.8s ease;
+    flex: 1;
+    aspect-ratio: 1;
+    padding: 0;
+    min-width: 0;
+    min-height: 0;
+
+    &--dark {
+      background-color: #4a4a4a; // Dark gray
+    }
+
+    &--light {
+      background-color: #d5ccaf; // Light yellow cream
+    }
+
+    &--hovered {
+      background-color: #8b95a5;
+    }
+
+    &--selected {
+      background-color: #e8e15b;
+    }
+  }
+
+  &__piece {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 3.5rem;
+    font-family: Arial, sans-serif;
+    background: transparent;
+    transition: all 0.8s ease;
+    position: relative;
+    z-index: 1;
+
+    &--white-king {
+      color: #000;
+      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.2);
+      &::before {
+        content: '♔';
+      }
+    }
+    
+    &--white-queen {
+      color: #000;
+      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.2);
+      &::before {
+        content: '♕';
+      }
+    }
+    
+    &--white-rook {
+      color: #000;
+      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.2);
+      &::before {
+        content: '♖';
+      }
+    }
+    
+    &--white-bishop {
+      color: #000;
+      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.2);
+      &::before {
+        content: '♗';
+      }
+    }
+    
+    &--white-knight {
+      color: #000;
+      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.2);
+      &::before {
+        content: '♘';
+      }
+    }
+    
+    &--white-pawn {
+      color: #000;
+      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.2);
+      &::before {
+        content: '♙';
+      }
+    }
+    
+    &--black-king {
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      &::before {
+        content: '♚';
+      }
+    }
+    
+    &--black-queen {
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      &::before {
+        content: '♛';
+      }
+    }
+    
+    &--black-rook {
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      &::before {
+        content: '♜';
+      }
+    }
+    
+    &--black-bishop {
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      &::before {
+        content: '♝';
+      }
+    }
+    
+    &--black-knight {
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      &::before {
+        content: '♞';
+      }
+    }
+    
+    &--black-pawn {
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      &::before {
+        content: '♟';
+      }
+    }
+
+    &--hovered {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
+      background: rgba(255, 255, 0, 0.2);
+    }
+
+    &--selected {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+      background: rgba(0, 255, 0, 0.2);
+    }
+  }
+
+  &__coordinates {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.8rem;
+    color: #666;
+    position: absolute;
+
+    &--row {
+      text-align: right;
+      padding-right: 0.5rem;
+      right: -1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    &--col {
+      padding-top: 0.5rem;
+      bottom: -1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  } 
+}
