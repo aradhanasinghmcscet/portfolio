@@ -1,6 +1,6 @@
 # Aradhana's Tech Odyssey
 
-A modern, interactive portfolio website and mobile applications showcasing my expertise in UI/UX, Frontend Development, MERN Stack, Node.js, Splunk, and Adobe technologies.
+A modern, interactive portfolio website showcasing my expertise in UI/UX, Frontend Development, MERN Stack, Node.js, Splunk, and Adobe technologies.
 
 ## Features
 
@@ -8,7 +8,7 @@ A modern, interactive portfolio website and mobile applications showcasing my ex
 - 🚀 Fast and optimized performance
 - 🎯 Interactive project showcase
 - 📊 Real-time analytics dashboard
-- 🌐 Cross-platform compatibility
+- 📱 Mobile-responsive layout
 
 
 
