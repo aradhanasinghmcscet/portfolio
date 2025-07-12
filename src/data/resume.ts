@@ -37,19 +37,19 @@ export interface Education {
 }
 
 export const resumeData: {
-  profile: {
-    name: string;
-    title: string;
-    summary: string;
-    location: string;
-    linkedin: string;
-    github: string;
+  readonly profile: {
+    readonly name: string;
+    readonly title: string;
+    readonly summary: string;
+    readonly location: string;
+    readonly linkedin: string;
+    readonly github: string;
   };
-  experience: Experience[];
-  projects: Project[];
-  skills: Skill[];
-  achievements: Achievement[];
-  education: Education[];
+  readonly experience: readonly Experience[];
+  readonly projects: readonly Project[];
+  readonly skills: readonly Skill[];
+  readonly achievements: readonly Achievement[];
+  readonly education: readonly Education[];
 } = {
   profile: {
     name: "Aradhana Singh",
