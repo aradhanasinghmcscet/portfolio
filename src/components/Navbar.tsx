@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import styles from './Navbar.module.scss';
-import { Box, AppBar, Toolbar, Typography, IconButton, Menu, MenuItem, Button, Drawer, List, ListItem, ListItemIcon, ListItemText, useTheme, useMediaQuery } from '@mui/material';
+import React from 'react';
+import { Box, AppBar, Toolbar, Typography, IconButton, Button, Drawer, List, ListItem, ListItemIcon, ListItemText} from '@mui/material';
 import { Menu as MenuIcon, Close as CloseIcon, Home as HomeIcon, School as SchoolIcon, Work as WorkIcon, Code as CodeIcon, Mail as MailIcon, Analytics as AnalyticsIcon, Games as ChessIcon } from '@mui/icons-material';
 
-import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 
@@ -42,8 +40,6 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection, isScrolled }) => {
     }
   };
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const clickCount = useSelector((state: RootState) => state.clickCounter.count);
 

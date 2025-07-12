@@ -1,6 +1,5 @@
-import React from 'react';
-import styles from './Home.module.scss';
-import { Box, Typography, Grid, Container, Button, useTheme, useMediaQuery, Card, CardContent, CardMedia, Avatar } from '@mui/material';
+
+import { Box, Typography, Grid, Container, Button, useTheme, useMediaQuery, Card, CardContent} from '@mui/material';
 import { motion } from 'framer-motion';
 import { FC } from 'react';
 import { styled } from '@mui/material/styles';

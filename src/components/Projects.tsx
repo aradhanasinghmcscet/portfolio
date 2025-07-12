@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import styles from './Projects.module.scss';
-import { Box, Typography, Grid, Card, CardMedia, CardContent, CardActions, Button, Chip, Container, List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
+import { Box, Typography, Grid, Card, CardContent, Chip, Container, List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
 import { motion } from 'framer-motion';
 import { Project } from '../types/resume';
 import { resumeData } from '../data/resume';

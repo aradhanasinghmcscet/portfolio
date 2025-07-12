@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography, Grid, TextField, Button, Container, Snackbar, Alert, Paper } from '@mui/material';
+import { Typography, Grid, TextField, Button, Container, Snackbar, Alert, Paper } from '@mui/material';
 import { motion } from 'framer-motion';
 import styles from './Contact.module.scss';
 import { MailOutline, Call, LocationOn } from '@mui/icons-material';
@@ -22,7 +22,6 @@ const Contact: React.FC<ContactProps> = ({ id }) => {
     message: '',
   });
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

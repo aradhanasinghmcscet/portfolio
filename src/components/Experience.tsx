@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './Experience.module.scss';
 import { Box, Typography, Paper, Container, Chip } from '@mui/material';
 import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, TimelineOppositeContent } from '@mui/lab';
 import { motion } from 'framer-motion';

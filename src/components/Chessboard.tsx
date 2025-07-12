@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../styles/components/chessboard.module.scss'
-import { isValidMove, ChessPosition } from '../utils/chessRules';
+import { isValidMove } from '../utils/chessRules';
 // import { useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,43 +11,13 @@ import {
   movePiece, 
   setHoverPosition, 
   resetBoard, 
-  undoMove, 
-  PieceColor, 
-  PieceType 
+  undoMove
 } from '../store/chessSlice';
 import { DndProvider } from 'react-dnd';
 import Row from './Row';
 import StarRating from './StarRating';
 
-interface ChessPiece {
-  type: PieceType;
-  color: PieceColor;
-}
 
-interface SelectedPiecePosition {
-  row: number;
-  col: number;
-}
-
-interface ChessPieceDragItem {
-  piece: ChessPiece;
-  fromPosition: ChessPosition;
-  board: (ChessPiece | null)[][];
-  isWhiteTurn: boolean;
-}
-
-interface RowProps {
-  rowIndex: number;
-  selectedPiece: SelectedPiecePosition | null;
-  handleSquareClick: (row: number, col: number) => void;
-  handleSquareDoubleClick: (row: number, col: number) => void;
-  handleTouchStart: (row: number, col: number, e: React.TouchEvent<HTMLDivElement>) => void;
-  handleTouchEnd: (row: number, col: number, e: React.TouchEvent<HTMLDivElement>) => void;
-  setHoverPosition: (position: SelectedPiecePosition | null) => void;
-  hoverPosition: SelectedPiecePosition | null;
-  board: (ChessPiece | null)[][];
-  isWhiteTurn: boolean;
-}
 
 interface ChessBoardProps {
   id: string;
@@ -100,8 +70,6 @@ const ChessBoard: React.FC<ChessBoardProps> = ({ id }) => {
       const movingPiece = board[fromPosition.row][fromPosition.col];
       
       if (movingPiece && isValidMove(fromPosition, toPosition, movingPiece, board, isWhiteTurn)) {
-        // Get the current piece at the destination
-        const destinationPiece = board[toPosition.row][toPosition.col];
         
         // Create a copy of the board state to check for captures
         const boardCopy = JSON.parse(JSON.stringify(board));
@@ -194,11 +162,11 @@ const ChessBoard: React.FC<ChessBoardProps> = ({ id }) => {
     dispatch(undoMove());
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent, row: number, col: number) => {
-    if (event.key === 'Escape') {
-      dispatch(setHoverPosition({ row: -1, col: -1 }));
-    }
-  };
+  // const handleKeyDown = (event: React.KeyboardEvent, row: number, col: number) => {
+  //   if (event.key === 'Escape') {
+  //     dispatch(setHoverPosition({ row: -1, col: -1 }));
+  //   }
+  // };
 
   return (
     <DndProvider backend={HTML5Backend}>
