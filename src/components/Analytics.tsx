@@ -50,6 +50,18 @@ const Analytics: React.FC<AnalyticsProps> = ({ id }) => {
     setIsLoading(false);
   }, []);
 
+  if (isLoading) {
+    return (
+      <Box sx={{ py: 8 }}>
+        <Container maxWidth="lg">
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+            <LinearProgress />
+          </Box>
+        </Container>
+      </Box>
+    );
+  }
+
   return (
     <Box sx={{ py: 8 }}>
       <Container maxWidth="lg">
