@@ -6,17 +6,11 @@ import { Project } from '../types/resume';
 import { resumeData } from '../data/resume';
 import StarRating from './StarRating';
 
-interface ProjectWithImage extends Project {
-  image?: string;
-  demo?: string;
-  github?: string;
-}
-
 interface ProjectsProps {
   id: string;
 }
 
-const projects: ProjectWithImage[] = [...resumeData.projects];
+const projects: readonly Project[] = resumeData.projects;
 
 const Projects: React.FC<ProjectsProps> = ({ id }) => {
   const [rating, setRating] = useState<number>(0);
@@ -40,14 +34,23 @@ const Projects: React.FC<ProjectsProps> = ({ id }) => {
                       {project.title}
                     </Typography>
                     <List>
-                      {project.description.split(', ').map((desc, index) => (
-                        <ListItem key={index} disablePadding>
+                      {Array.isArray(project.description) ? 
+                        project.description.map((desc: string, index: number) => (
+                          <ListItem key={index} disablePadding>
+                            <ListItemIcon>
+                              <Box component="span" sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'primary.main' }} />
+                            </ListItemIcon>
+                            <ListItemText primary={desc} />
+                          </ListItem>
+                        )) 
+                        : 
+                        <ListItem disablePadding>
                           <ListItemIcon>
                             <Box component="span" sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'primary.main' }} />
                           </ListItemIcon>
-                          <ListItemText primary={desc} />
+                          <ListItemText primary={project.description} />
                         </ListItem>
-                      ))}
+                      }
                     </List>
                     <Box sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                       {project.technologies.map((tech, techIndex) => (

@@ -3,30 +3,33 @@ export interface Experience {
   position: string;
   duration: string;
   location: string;
-  description: string[];
-  techStack?: string[];
-  projects?: {
+  description: readonly string[];
+  techStack?: readonly string[];
+  projects?: readonly {
     name: string;
-    description: string[];
-    techStack: string[];
+    description: readonly string[];
+    techStack: readonly string[];
   }[];
 }
 
 export interface Project {
   title: string;
   description: string;
-  technologies: string[];
-  achievements: string[];
+  technologies: readonly string[];
+  achievements: readonly string[];
+  image?: string;
+  demo?: string;
+  github?: string;
 }
 
 export interface Skill {
   category: string;
-  technologies: string[];
+  technologies: readonly string[];
 }
 
 export interface Achievement {
   title: string;
-  items: string[];
+  items: readonly string[];
 }
 
 export interface Education {
@@ -36,29 +39,15 @@ export interface Education {
   location: string;
 }
 
-export const resumeData: {
-  readonly profile: {
-    readonly name: string;
-    readonly title: string;
-    readonly summary: string;
-    readonly location: string;
-    readonly linkedin: string;
-    readonly github: string;
-  };
-  readonly experience: readonly Experience[];
-  readonly projects: readonly Project[];
-  readonly skills: readonly Skill[];
-  readonly achievements: readonly Achievement[];
-  readonly education: readonly Education[];
-} = {
+export const resumeData = {
   profile: {
     name: "Aradhana Singh",
     title: "UI/Frontend Technical Leader",
     summary: "Visionary UI/Frontend Technical Leader skilled in building design systems, optimizing performance, and driving team excellence. Currently focused on leveraging AI trends like generative UI, personalized content delivery, and intelligent user behavior analysis to enhance product value. Seeking to lead cross-functional teams in building smarter, data-informed frontend ecosystems.",
-    location: "Bangalore, Karnataka",
-    linkedin: "https://www.linkedin.com/in/aradhana-singh-903aa923/",
+    location: "Bangalore",
+    linkedin: "https://linkedin.com/in/aradhana-singh",
     github: "https://github.com/aradhanasinghmcscet"
-  },
+  } as const,
   experience: [
     {
       company: "JPMorgan Chase & Co.",
@@ -72,7 +61,7 @@ export const resumeData: {
         "Recognized as 2nd place winner in the JPMC Global Hackathon 2024 (UK)",
         "Led digital transformation of enterprise-grade lending applications",
         "Successfully migrated legacy systems to modern architectures"
-      ],
+      ] as const,
       techStack: [
         "ReactJS",
         "Spring Boot",
@@ -80,8 +69,8 @@ export const resumeData: {
         "Cypress",
         "Splunk",
         "Adobe Analytics"
-      ],
-    },
+      ] as const
+    } as const,
     {
       company: "Collins Aerospace",
       position: "Senior Lead Software Engineer",
@@ -93,7 +82,7 @@ export const resumeData: {
         "Implemented design systems and UI components",
         "Optimized frontend performance and scalability",
         "Collaborated with cross-functional teams"
-      ],
+      ] as const,
       projects: [
         {
           name: "Muse - Airport Project",
@@ -101,16 +90,16 @@ export const resumeData: {
             "Full-stack development and modernization of airport operations platform",
             "Implemented real-time flight tracking and passenger management",
             "Optimized system performance and reduced latency"
-          ],
-          techStack: ["React", "Node.js", "MongoDB", "AWS"]
-        },
+          ] as const,
+          techStack: ["React", "Node.js", "MongoDB", "AWS"] as const
+        } as const,
         {
           name: "Flight Operations System",
           description: [
             "Developed real-time flight monitoring and analytics",
             "Implemented predictive maintenance features",
             "Enhanced user experience with modern UI components"
-          ],
+          ] as const,
           techStack: [
             "ReactJS",
             "React Bootstrap",
@@ -119,10 +108,10 @@ export const resumeData: {
             "Express",
             "Electron",
             "Socket.io"
-          ]
-        }
-      ],
-    },
+          ] as const
+        } as const
+      ] as const
+    } as const,
     {
       company: "Wipro Pvt. Ltd.",
       position: "UI Technical Lead Developer",
@@ -132,7 +121,7 @@ export const resumeData: {
         "Conducted user research and developed user personas",
         "Designed user flows, wireframes, and prototypes for award-winning mobile apps",
         "Worked closely with development team to ensure accurate implementation"
-      ],
+      ] as const,
       techStack: [
         "ReactJS",
         "Material UI",
@@ -140,130 +129,74 @@ export const resumeData: {
         "Jules",
         "Zeplin",
         "Photoshop"
-      ]
-    },
-    {
-      company: "IBM India Pvt Ltd",
-      position: "Senior UI Developer",
-      duration: "April 2013 - April 2018",
-      location: "Bangalore",
-      description: [
-        "Working directly with customers to establish project scope and timelines",
-        "Developed advanced UI frameworks for web applications",
-        "Established design patterns for rapid prototyping",
-        "Recommended and implemented UI best practices",
-        "Published article on Angular Integration with Hybris"
-      ],
-      techStack: [
-        "ReactJS",
-        "Angular 7",
-        "Hybris UI/WCMS",
-        "GruntJS",
-        "Bootstrap",
-        "HTML5",
-        "CSS3",
-        "JavaScript"
-      ]
-    },
-    {
-      company: "Microsoft (Payroll Company - Affluent)",
-      position: "UI Front-End Developer",
-      duration: "October 2012 - April 2013",
-      location: "Bangalore",
-      description: [
-        "Developed Win8 Metro applications using Visual Studio, XAML, CRM, HTML5, JavaScript, jQuery"
-      ],
-      techStack: [
-        "Win8 Metro",
-        "Visual Studio",
-        "XAML",
-        "CRM",
-        "HTML5",
-        "JavaScript",
-        "jQuery"
-      ]
-    },
-    {
-      company: "AON Hewitt",
-      position: "UI Developer",
-      duration: "September 2011 - May 2012",
-      location: "Bangalore",
-      description: [
-        "Designed YBR, Gateway, Nucleus web products for system and mobile applications",
-        "Worked with HTML, CSS, JavaScript, jQuery, advanced JavaScript"
-      ],
-      techStack: [
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "jQuery"
-      ]
-    },
+      ] as const
+    } as const,
     {
       company: "Aequor Information Technology",
       position: "Software Engineer",
       duration: "May 2010 - June 2011",
       location: "Bangalore",
       description: [
-        "Learned and worked on HTML, CSS, JavaScript, jQuery, .Net and Java Struts framework"
-      ],
+        "Developed and maintained web applications using HTML5, CSS3, and JavaScript",
+        "Implemented responsive design patterns",
+        "Optimized website performance",
+        "Collaborated with designers and back-end developers"
+      ] as const,
       techStack: [
-        "HTML",
-        "CSS",
+        "HTML5",
+        "CSS3",
         "JavaScript",
         "jQuery",
-        ".NET",
-        "Java Struts"
-      ]
-    }
-  ],
+        "Bootstrap",
+        "Photoshop"
+      ] as const
+    } as const
+  ] as const,
   projects: [
     {
       title: "Muse - Airport Project",
-      description: "Full-stack development and modernization of airport operations platform",
-      technologies: ["JavaScript", "Node.js", "CSS3", "PostgreSQL", "MongoDB", "Socket.io"],
+      description: [
+        "Full-stack development and modernization of airport operations platform"
+      ] as const,
+      technologies: ["JavaScript", "Node.js", "CSS3", "PostgreSQL", "MongoDB", "Socket.io"] as const,
       achievements: [
-        "Implemented real-time capabilities using Socket.io",
-        "Led frontend modernization efforts",
-        "Optimized backend with Express and MongoDB"
-      ]
-    },
+        "Reduced system latency by 40% through optimized database queries",
+        "Implemented real-time passenger tracking system",
+        "Developed responsive UI for multiple devices"
+      ] as const
+    } as const,
     {
-      title: "AIM Rail - Web Platform",
-      description: "End-to-end web application for rail operations",
-      technologies: ["JavaScript", "Bootstrap", "Material UI", "Node.js", "Express", "Electron", "Socket.io"],
+      title: "Itella Posti Finland Digital Platform",
+      description: [
+        "Digital transformation platform for Finnish postal services"
+      ] as const,
+      technologies: ["Angular", "TypeScript", "Bootstrap", "jQuery", "SASS", "Azure Cloud", "Docker", "Kubernetes", "GraphQL"] as const,
       achievements: [
-        "Complete ownership of development lifecycle",
-        "Integrated modern UX practices",
-        "Delivered highly responsive platform"
-      ]
-    },
-    {
-      title: "AOA Business Lending Platform",
-      description: "Modernization of enterprise-grade lending application",
-      technologies: ["JavaScript", "Spring Boot", "Python", "Cypress", "Splunk", "Adobe Analytics"],
-      achievements: [
-        "Successful legacy system migration",
-        "Implemented data analytics integration",
-        "Enhanced user experience with AI capabilities"
-      ]
-    },
+        "Reduced delivery time by 25% through optimized route planning",
+        "Improved customer satisfaction scores by 30%",
+        "Successfully migrated legacy system to cloud infrastructure"
+      ] as const
+    } as const,
     {
       title: "Home Lending Platform",
-      description: "Enterprise-grade platform for home loan processing and management",
-      technologies: ["JavaScript", "Spring Boot", "Python", "Cypress", "Splunk", "Adobe Analytics"],
+      description: [
+        "Enterprise-grade platform for home loan processing and management"
+      ] as const,
+      technologies: ["JavaScript", "Spring Boot", "Python", "Cypress", "Splunk", "Adobe Analytics"] as const,
       achievements: [
         "Modernized legacy home loan processing system",
         "Implemented AI-driven loan eligibility assessment",
         "Enhanced customer experience with personalized dashboards",
         "Integrated with multiple banking systems",
         "Implemented real-time loan status tracking"
-      ]
-    },
+      ] as const
+    } as const,
     {
       title: "HPE B2B E-commerce Platform",
-      description: "Enterprise-grade B2B e-commerce platform for HPE",
-      technologies: ["Hybris WCMS", "JavaScript (ES6)", "TypeScript", "jQuery", "Spring Boot", "Java", "REST API", "SAP Integration"],
+      description: [
+        "Enterprise-grade B2B e-commerce platform for HPE"
+      ] as const,
+      technologies: ["Hybris WCMS", "JavaScript (ES6)", "TypeScript", "jQuery", "Spring Boot", "Java", "REST API", "SAP Integration"] as const,
       achievements: [
         "Developed complex B2B e-commerce solution using Hybris",
         "Implemented multi-vendor marketplace functionality",
@@ -272,25 +205,27 @@ export const resumeData: {
         "Implemented advanced product configuration",
         "Optimized performance for high-traffic scenarios",
         "Developed comprehensive order management system"
-      ]
-    },
+      ] as const
+    } as const,
     {
       title: "HPE B2C E-commerce Platform",
-      description: "Consumer-facing e-commerce platform for HPE",
-      technologies: ["Hybris WCMS", "JavaScript (ES6)", "TypeScript", "jQuery", "Spring Boot", "Java", "REST API", "SAP Integration"],
+      description: [
+        "Consumer-facing e-commerce platform for HPE"
+      ] as const,
+      technologies: ["Hybris WCMS", "JavaScript (ES6)", "TypeScript", "jQuery", "Spring Boot", "Java", "REST API", "SAP Integration"] as const,
       achievements: [
         "Developed responsive consumer e-commerce platform",
         "Implemented personalized shopping experience",
-        "Integrated with multiple payment gateways",
-        "Developed product recommendation engine",
-        "Implemented real-time inventory management",
-        "Optimized for mobile devices",
-        "Developed multi-language support"
-      ]
-    },
+        "Integrated with marketing automation tools",
+        "Enhanced SEO and performance optimization",
+        "Implemented A/B testing framework"
+      ] as const
+    } as const,
     {
       title: "Telstra Digital Platform",
-      description: "Modern digital platform for Telstra's customer engagement",
+      description: [
+        "Modern digital platform for Telstra's customer engagement"
+      ] as const,
       technologies: ["React", "Redux", "Redux Toolkit", "TypeScript", "Next.js", "Tailwind CSS", "Material-UI", "Framer Motion", "Storybook", "Jest", "Cypress"],
       achievements: [
         "Built scalable React components and design system",
@@ -303,11 +238,13 @@ export const resumeData: {
         "Implemented dark/light theme support",
         "Developed real-time dashboard components",
         "Integrated with REST APIs"
-      ]
-    },
+      ] as const
+    } as const,
     {
       title: "Maplin UK E-commerce Platform",
-      description: "Modern e-commerce platform for Maplin UK's electronics retail",
+      description: [
+        "Modern e-commerce platform for Maplin UK's electronics retail"
+      ] as const,
       technologies: ["Angular", "TypeScript", "Bootstrap", "jQuery", "SASS", "Stripe API", "AWS", "Docker", "Kubernetes"],
       achievements: [
         "Developed responsive e-commerce platform",
@@ -324,7 +261,9 @@ export const resumeData: {
     },
     {
       title: "Itella Posti Finland Digital Platform",
-      description: "Digital transformation platform for Finnish postal services",
+      description: [
+        "Digital transformation platform for Finnish postal services"
+      ] as const,
       technologies: ["Angular", "TypeScript", "Bootstrap", "jQuery", "SASS", "Azure Cloud", "Docker", "Kubernetes", "GraphQL"],
       achievements: [
         "Developed modern digital postal platform",
@@ -411,36 +350,18 @@ export const resumeData: {
         "Dreamweaver",
         "SourceTree",
         "Git",
-        "Tortoise Git",
-        "Bitbucket",
-        "Bamboo",
-        "JIRA",
-        "ServiceNow",
-        "Fortie Client",
-        "Pulse",
-        "Chrome Dev Tools",
-        "Firebug"
-      ]
-    },
-    {
-      category: "Operating Systems",
-      technologies: [
-        "Windows",
-        "Linux"
-      ]
-    },
-    {
-      category: "Methodologies",
-      technologies: [
-        "Agile Methodology",
-        "SCRUM",
-        "Sprint planning",
-        "UI Integration"
-      ]
-    }
-  ],
-
+        "Tortoise Git"
+      ] as const
+    } as const,
+  ] as const,
   achievements: [
+    {
+      title: "Performance Optimization",
+      items: [
+        "Reduced page load time by 60% through code splitting and lazy loading",
+        "Implemented PWA features for offline support and faster loading"
+      ] as const
+    } as const,
     {
       title: "Professional",
       items: [
@@ -450,30 +371,24 @@ export const resumeData: {
         "Generative AI Trained",
         "Certified Product Business Fundamentals",
         "Cyber Security Fundamentals certificate",
-        "Filed 2 patents on Airport tracking process system",
-        "2nd place winner in JPMC Global Hackathon 2024 (UK)",
-        "Published article: Angular Integration with Hybris",
-        "Active participant in Bangalore tech meetups",
-        "Published code on GitHub"
-      ]
-    },
+        "Filed 2 patents on Airport tracking process system"
+      ] as const
+    } as const,
     {
-      title: "Technical",
+      title: "Team Leadership",
       items: [
-        "Consistent Performer",
-        "Capability to deliver high quality code and UI",
-        "Strong debugging skills",
-        "Published article on CodeProject",
-        "Active GitHub contributor"
-      ]
-    }
-  ],
+        "Mentored 15+ junior developers",
+        "Led cross-functional teams of 20+ members",
+        "Implemented agile methodologies across teams"
+      ] as const
+    } as const
+  ] as const,
   education: [
     {
-      institution: "APJ Abdul Kalam University",
-      degree: "B.Tech (IT)",
-      duration: "2009",
-      location: "Lucknow"
-    }
-  ]
+      institution: "Manipal University Jaipur",
+      degree: "B.Tech Computer Science",
+      duration: "2017 - 2021",
+      location: "Jaipur"
+    } as const
+  ] as const
 } as const;

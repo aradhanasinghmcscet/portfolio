@@ -14,9 +14,12 @@ export interface Experience {
 
 export interface Project {
   title: string;
-  description: string;
-  technologies: string[];
-  achievements: string[];
+  description: readonly string[];
+  technologies: readonly string[];
+  achievements: readonly string[];
+  image?: string;
+  demo?: string;
+  github?: string;
 }
 
 export interface Skill {
