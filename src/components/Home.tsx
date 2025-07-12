@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './Home.module.scss';
-import { Box, Typography, Grid, Container, Button, useTheme, useMediaQuery } from '@mui/material';
+import { Box, Typography, Grid, Container, Button, useTheme, useMediaQuery, Card, CardContent, CardMedia, Avatar } from '@mui/material';
 import { motion } from 'framer-motion';
 import { FC } from 'react';
 import { styled } from '@mui/material/styles';
+import { auto } from '@popperjs/core';
 
 interface HomeProps {
   id: string;
@@ -15,12 +16,13 @@ const StyledContainer = styled(Container)(({ theme }) => ({
 }));
 
 const StyledTitle = styled(Typography)(({ theme }) => ({
+  component: 'h1',
   fontFamily: 'var(--font-roboto)',
   fontWeight: 700,
   lineHeight: 1.4,
   marginBottom: '1.5rem',
   [theme.breakpoints.down('md')]: {
-    fontSize: '2.5rem',
+    fontSize: '1.5rem',
   },
 }));
 
@@ -59,6 +61,7 @@ const HomeComponent: FC<HomeProps> = ({ id }) => {
     <Box
       sx={{
         minHeight: '100vh',
+        width:auto,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -84,34 +87,148 @@ const HomeComponent: FC<HomeProps> = ({ id }) => {
 
       <StyledContainer>
         <Grid container spacing={4} alignItems="center">
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={8}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <StyledTitle>
+              <StyledTitle variant='h2'>
                 Aradhana's Tech Odyssey
               </StyledTitle>
               <StyledSubtitle>
-                Full Stack Developer | UI/UX Expert | MERN Specialist
+                Web Developer | Full Stack Developer | UI/UX Expert | MERN Specialist
               </StyledSubtitle>
-              <StyledButton
-                variant="contained"
-                size={isMobile ? 'small' : 'large'}
-                sx={{
-                  backgroundColor: 'white',
-                  color: 'primary.main',
-                  '&:hover': {
-                    backgroundColor: 'primary.light',
-                  },
-                }}
+
+              {/* UI/UX Experience Showcase */}
+              <Box>
+                <Box sx={{ mt: 4, display: 'flex', flexDirection: 'column', gap: 3 }}>
+                  <Typography variant="h5" sx={{ color: 'rgba(255, 255, 255, 0.9)', mb: 2 }}>
+                    UI/UX Design Expertise
+                  </Typography>
+                  
+                  <Grid container spacing={2}>
+                    {/* Design Tools Card */}
+                    <Grid item xs={12} sm={6}>
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                      >
+                        <Card 
+                          sx={{ 
+                            backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                            backdropFilter: 'blur(4px)',
+                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            borderRadius: 2,
+                            transition: 'transform 0.3s ease',
+                            '&:hover': {
+                              transform: 'translateY(-5px)',
+                              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+                            }
+                          }}
+                        >
+                          <CardContent>
+                            <Typography variant="h6" sx={{ mb: 2, color: 'white' }}>
+                              Design Tools Mastery
+                            </Typography>
+                            <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.85)' }}>
+                              Expert in Adobe Creative Suite, Figma, and Sketch for crafting seamless user experiences
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </motion.div>
+                    </Grid>
+
+                    {/* Web Development Card */}
+                    <Grid item xs={12} sm={6}>
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6, delay: 0.3 }}
+                      >
+                        <Card 
+                          sx={{ 
+                            backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                            backdropFilter: 'blur(4px)',
+                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            borderRadius: 2,
+                            transition: 'transform 0.3s ease',
+                            '&:hover': {
+                              transform: 'translateY(-5px)',
+                              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+                            }
+                          }}
+                        >
+                          <CardContent>
+                            <Typography variant="h6" sx={{ mb: 2, color: 'white' }}>
+                              Full Stack Development
+                            </Typography>
+                            <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.85)' }}>
+                              Expert in building scalable web applications with modern technologies
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </motion.div>
+                    </Grid>
+
+                    {/* UX Principles Card */}
+                    <Grid item xs={12} sm={6}>
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                      >
+                        <Card 
+                          sx={{ 
+                            backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                            backdropFilter: 'blur(4px)',
+                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            borderRadius: 2,
+                            transition: 'transform 0.3s ease',
+                            '&:hover': {
+                              transform: 'translateY(-5px)',
+                              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+                            }
+                          }}
+                        >
+                          <CardContent>
+                            <Typography variant="h6" sx={{ mb: 2, color: 'white' }}>
+                              UX Principles
+                            </Typography>
+                            <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.85)' }}>
+                              Deep understanding of user-centered design, accessibility, and responsive layouts
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </motion.div>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Box>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
               >
-                View My Work
-              </StyledButton>
+                <StyledButton
+                  variant="contained"
+                  size={isMobile ? 'small' : 'large'}
+                  sx={{
+                    backgroundColor: 'white',
+                    color: 'primary.main',
+                    '&:hover': {
+                      backgroundColor: 'primary.light',
+                    },
+                  }}
+                >
+                  View My Work
+                </StyledButton>
+              </motion.div>
             </motion.div>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={4}>
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -125,16 +242,18 @@ const HomeComponent: FC<HomeProps> = ({ id }) => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  padding: '2rem'
                 }}
               >
-                <img
-                  src="/DSC03719.JPG"
-                  alt="Profile"
+                {/* Add content here */}
+                <img 
+                  src="/DSC03682.JPG" 
+                  alt="Profile" 
                   style={{
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
-                    borderRadius: '16px',
+                    borderRadius: '16px'
                   }}
                 />
               </Box>

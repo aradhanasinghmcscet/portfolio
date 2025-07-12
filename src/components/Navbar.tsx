@@ -60,7 +60,13 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection, isScrolled }) => {
         }}
       >
         <Toolbar>
-        <Typography className="navbar__logo" variant="h6" component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+          <Typography className="navbar__logo" variant="h1" component="div" sx={{
+            flexGrow: 1,
+            display: { xs: 'none', sm: 'block' },
+            fontSize: '1.5rem',
+            fontStyle: 'italic',
+            fontVariant: 'petite-caps'
+          }}>
             Aradhana
           </Typography>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>

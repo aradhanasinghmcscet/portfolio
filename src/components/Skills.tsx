@@ -10,6 +10,7 @@ const skills: Skill[] = [
   { name: 'Frontend Development', level: 95 },
   { name: 'MERN Stack', level: 90 },
   { name: 'Node.js', level: 85 },
+  { name: 'AWS EC2, Lambda, S3', level: 70 },
   { name: 'Splunk', level: 80 },
   { name: 'Adobe', level: 85 },
 ];
