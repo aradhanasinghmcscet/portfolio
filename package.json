@@ -35,7 +35,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://aradhanasinghmcscet.github.io/portfolio",
+  "homepage": ".",
   "overrides": {
     "ajv": {
       "version": "^8.12.0"
