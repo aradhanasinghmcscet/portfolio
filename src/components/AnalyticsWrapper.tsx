@@ -1,7 +1,4 @@
 import React, { useEffect } from 'react';
-import styles from './AnalyticsWrapper.module.scss';
-import { Box } from '@mui/material';
-
 interface AnalyticsWrapperProps {
   id: string;
   children: React.ReactNode;

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './Analytics.module.scss';
-import { Box, Grid, Paper, Typography, CircularProgress, LinearProgress, Container } from '@mui/material';
+import { Box, Grid, Paper, Typography, Container, LinearProgress } from '@mui/material';
 import { motion } from 'framer-motion';
 import type { AnalyticsData } from '../types';
 
@@ -15,8 +14,8 @@ const Analytics: React.FC<AnalyticsProps> = ({ id }) => {
     averageTime: '00:00',
     pageViews: {},
   });
-
   const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     const fetchAnalytics = async () => {
