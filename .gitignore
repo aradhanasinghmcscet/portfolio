@@ -19,3 +19,4 @@ yarn-error.log*
 
 # ESLint
 node_modules/.cache/.eslintcache
+!build/
