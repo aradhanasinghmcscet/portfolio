@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './Skills.module.scss';
 import { Box, Typography, Grid, Paper, CircularProgress, Container } from '@mui/material';
 import { motion } from 'framer-motion';
 import { Skill } from '../types';
