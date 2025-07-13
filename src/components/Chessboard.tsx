@@ -164,7 +164,7 @@ const ChessBoard: React.FC<ChessBoardProps> = ({ id }) => {
         <Container  maxWidth="lg" sx={{ py: 8 }} className='chessboard__container'>
       <div className="chessboard__stars">
         <div className="chessboard__header">
-          <h2>Chess Game</h2>
+          <h2>Let's take a break and play Chess Game</h2>
         </div>
         <StarRating
           initialValue={rating}
