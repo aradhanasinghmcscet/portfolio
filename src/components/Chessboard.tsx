@@ -16,6 +16,7 @@ import {
 import { DndProvider } from 'react-dnd';
 import Row from './Row';
 import StarRating from './StarRating';
+import { Container } from '@mui/material';
 
 
 
@@ -37,13 +38,17 @@ const ChessBoard: React.FC<ChessBoardProps> = ({ id }) => {
   const chessState = useSelector((state: RootState) => state.chess);
   const [touches, setTouches] = React.useState<{ [key: number]: TouchData }>({});
 
-  // Initialize board if not initialized
   // Initialize board on component mount
   React.useEffect(() => {
     if (!chessState.board?.[0]?.[0]) {
       dispatch(initializeBoard());
     }
-  }, [dispatch, chessState]);
+  }, [dispatch, chessState.board]);
+
+  // Log board state for debugging
+  React.useEffect(() => {
+    console.log('Board state:', chessState.board);
+  }, [chessState.board]);
 
   // Destructure state after initialization
   const { board, selectedPiece, hoverPosition, isWhiteTurn, moveHistory, capturedPieces } = chessState;
@@ -68,48 +73,35 @@ const ChessBoard: React.FC<ChessBoardProps> = ({ id }) => {
       const toPosition = { row, col };
       const movingPiece = board[fromPosition.row][fromPosition.col];
       
-      if (movingPiece && isValidMove(fromPosition, toPosition, movingPiece, board, isWhiteTurn)) {
-        
-        // Create a copy of the board state to check for captures
-        const boardCopy = JSON.parse(JSON.stringify(board));
-        const capturedPiece = boardCopy[toPosition.row][toPosition.col];
-        
-        dispatch(movePiece({
-          from: fromPosition,
-          to: toPosition,
-          piece: movingPiece,
-          capturedPiece: capturedPiece || null
-        }));
+      if (movingPiece && isValidMove(fromPosition, toPosition, board, movingPiece)) {
+        dispatch(movePiece(toPosition));
       }
       dispatch(setHoverPosition({ row: -1, col: -1 }));
       return;
     }
 
-    // If piece is selected and clicked again, deselect
-    if (selectedPiece && selectedPiece.row === row && selectedPiece.col === col) {
-      dispatch(setHoverPosition({ row: -1, col: -1 }));
-      return;
+    // Only select pieces of the current player's color
+    if (piece.color === (isWhiteTurn ? 'white' : 'black')) {
+      dispatch(selectPiece({ row, col }));
+      dispatch(setHoverPosition(null));
     }
-
-    // Select piece
-    dispatch(selectPiece({ row, col }));
   };
 
   const handleSquareDoubleClick = (row: number, col: number) => {
     const piece = board[row][col];
-    const fromPiece = board[selectedPiece?.row || 0][selectedPiece?.col || 0];
     
-    if (piece && fromPiece && isValidMove(selectedPiece!, { row, col }, fromPiece, board, isWhiteTurn)) {
+    if (!piece) return;
+    
+    // Get the current selected piece
+    const selected = selectedPiece || { row: -1, col: -1 };
+    const fromPiece = board[selected.row][selected.col];
+    
+    if (fromPiece && isValidMove(selected, { row, col }, board, fromPiece)) {
       // Create a copy of the board state to check for captures
-      const boardCopy = JSON.parse(JSON.stringify(board));
-      const capturedPiece = boardCopy[row][col];
+      // const boardCopy = JSON.parse(JSON.stringify(board));
+      // const capturedPiece = boardCopy[row][col];
       
-      dispatch(movePiece({
-        from: selectedPiece!,
-        to: { row, col },
-        piece: fromPiece,
-        capturedPiece: capturedPiece || null
-      }));
+      dispatch(movePiece({ row, col }));
     }
     dispatch(setHoverPosition({ row: -1, col: -1 }));
   };
@@ -169,7 +161,7 @@ const ChessBoard: React.FC<ChessBoardProps> = ({ id }) => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-        <div className='chessboard__container'>
+        <Container  maxWidth="lg" sx={{ py: 8 }} className='chessboard__container'>
       <div className="chessboard__stars">
         <div className="chessboard__header">
           <h2>Chess Game</h2>
@@ -239,7 +231,7 @@ const ChessBoard: React.FC<ChessBoardProps> = ({ id }) => {
           ))}
         </div>
       </div>
-      </div>
+      </Container>
     </DndProvider>
   );
 };

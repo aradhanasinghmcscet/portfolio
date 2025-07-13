@@ -1,6 +1,7 @@
 import React from 'react';
 import { SelectedPiecePosition, ChessPiece } from '../store/chessSlice';
 import styles from '../styles/components/chessboard.module.scss';
+import { isValidMove } from '../utils/chessRules';
 
 interface RowProps {
   rowIndex: number;
@@ -32,12 +33,15 @@ const Row: React.FC<RowProps> = ({
       {board[rowIndex].map((piece, colIndex) => {
         const isHovered = hoverPosition?.row === rowIndex && hoverPosition?.col === colIndex;
         const isDarkSquare = (rowIndex + colIndex) % 2 === 1;
+        const isTargetSquare = selectedPiece && board[selectedPiece.row]?.[selectedPiece.col] && isValidMove(selectedPiece, { row: rowIndex, col: colIndex }, board, board[selectedPiece.row][selectedPiece.col]!);
         const squareClasses = `${styles['chessboard__square']} ${
           isDarkSquare ? styles['chessboard__square--dark'] : styles['chessboard__square--light']
         } ${
           isHovered ? styles['chessboard__square--hovered'] : ''
         } ${
           selectedPiece?.row === rowIndex && selectedPiece?.col === colIndex ? styles['chessboard__square--selected'] : ''
+        } ${
+          isTargetSquare ? styles['chessboard__square--valid-move'] : ''
         }`;
 
         return (

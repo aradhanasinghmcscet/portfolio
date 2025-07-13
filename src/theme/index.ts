@@ -1,5 +1,5 @@
 import { createTheme, responsiveFontSizes, lighten, darken } from '@mui/material/styles';
-import { red, blue, grey, green } from '@mui/material/colors';
+// import { red, blue, grey, green } from '@mui/material/colors';
 
 // 3D Effect Styles
 interface ThemeColors {

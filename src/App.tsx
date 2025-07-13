@@ -80,7 +80,7 @@ function App() {
             description="Full Stack Developer Portfolio - Aradhana Singh"
             keywords={['portfolio', 'developer', 'full stack', 'web development', 'react', 'typescript']}
             image="/profile-placeholder.svg"/>
-          <AnalyticsWrapper id="analytics">
+          <AnalyticsWrapper>
             <Box sx={{ width: '100%' }}>
               <ClickableWrapper>
                 <motion.div

@@ -1,81 +1,85 @@
 import React, { useState, useEffect } from 'react';
-import styles from './Resume.module.scss';
+// import styles from './Resume.module.scss';
 import { Box, Typography, Container, Grid, Paper, Chip, List, ListItem, ListItemText, ListItemIcon, Button } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, TimelineOppositeContent } from '@mui/lab';
+import { 
+  // Timeline, 
+  TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, TimelineOppositeContent } from '@mui/lab';
 import { motion } from 'framer-motion';
 import { useTheme } from '@mui/material/styles';
 import { getResume } from '../services/api';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { useMediaQuery } from '@mui/material';
-import { Experience, Project, Skill, Achievement, Education, ResumeData } from '../types/resume';
+// import { useMediaQuery } from '@mui/material';
+import { Experience,
+  //  Project, 
+   Skill, Achievement, Education, ResumeData } from '../types/resume';
 
 // Remove this interface since we're using state instead of props
 
 // 3D Effect Styles
-const containerStyle = {
-  perspective: '1000px',
-  transformStyle: 'preserve-3d',
-  position: 'relative',
-  overflow: 'visible',
-};
+// const containerStyle = {
+//   perspective: '1000px',
+//   transformStyle: 'preserve-3d',
+//   position: 'relative',
+//   overflow: 'visible',
+// };
 
-const cardStyle = {
-  position: 'relative',
-  transformStyle: 'preserve-3d',
-  transition: 'transform 0.3s ease-in-out',
-  '&:hover': {
-    transform: 'translateZ(20px) rotateX(5deg) rotateY(5deg)',
-    boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-  },
-};
+// const cardStyle = {
+//   position: 'relative',
+//   transformStyle: 'preserve-3d',
+//   transition: 'transform 0.3s ease-in-out',
+//   '&:hover': {
+//     transform: 'translateZ(20px) rotateX(5deg) rotateY(5deg)',
+//     boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+//   },
+// };
 
-const timelineItemStyle = {
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    transform: 'translateZ(-1px)',
-    background: 'linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%)',
-  },
-};
+// const timelineItemStyle = {
+//   '&::before': {
+//     content: '""',
+//     position: 'absolute',
+//     top: 0,
+//     left: 0,
+//     right: 0,
+//     bottom: 0,
+//     transform: 'translateZ(-1px)',
+//     background: 'linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%)',
+//   },
+// };
 
-const chipStyle = {
-  transform: 'translateZ(10px)',
-  transition: 'all 0.3s ease',
-  '&:hover': {
-    transform: 'translateZ(20px)',
-    boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
-  },
-};
+// const chipStyle = {
+//   transform: 'translateZ(10px)',
+//   transition: 'all 0.3s ease',
+//   '&:hover': {
+//     transform: 'translateZ(20px)',
+//     boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
+//   },
+// };
 
 // Animation Variants
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-      when: "beforeChildren",
-      staggerChildren: 0.1
-    }
-  }
-};
+// const containerVariants = {
+//   hidden: { opacity: 0 },
+//   visible: {
+//     opacity: 1,
+//     transition: {
+//       duration: 0.5,
+//       when: "beforeChildren",
+//       staggerChildren: 0.1
+//     }
+//   }
+// };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut"
-    }
-  }
-};
+// const itemVariants = {
+//   hidden: { opacity: 0, y: 20 },
+//   visible: {
+//     opacity: 1,
+//     y: 0,
+//     transition: {
+//       duration: 0.5,
+//       ease: "easeOut"
+//     }
+//   }
+// };
 
 const Resume: React.FC = () => {
   const theme = useTheme();
