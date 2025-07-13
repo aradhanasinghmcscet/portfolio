@@ -34,25 +34,24 @@ interface TouchData {
 const ChessBoard: React.FC<ChessBoardProps> = ({ id }) => {
   const [rating, setRating] = useState<number>(0);
   const dispatch = useDispatch();
-  const { board, selectedPiece, hoverPosition, isWhiteTurn, moveHistory, capturedPieces } = useSelector((state: RootState) => {
-    return {
-      board: state.chess.board,
-      selectedPiece: state.chess.selectedPiece,
-      hoverPosition: state.chess.hoverPosition,
-      isWhiteTurn: state.chess.isWhiteTurn,
-      moveHistory: state.chess.moveHistory,
-      capturedPieces: {
-        white: state.chess.capturedPieces.white,
-        black: state.chess.capturedPieces.black
-      }
-    };
-  });
+  const chessState = useSelector((state: RootState) => state.chess);
   const [touches, setTouches] = React.useState<{ [key: number]: TouchData }>({});
 
+  // Initialize board if not initialized
   // Initialize board on component mount
   React.useEffect(() => {
-    dispatch(initializeBoard());
-  }, [dispatch]);
+    if (!chessState.board?.[0]?.[0]) {
+      dispatch(initializeBoard());
+    }
+  }, [dispatch, chessState]);
+
+  // Destructure state after initialization
+  const { board, selectedPiece, hoverPosition, isWhiteTurn, moveHistory, capturedPieces } = chessState;
+
+  // Handle case where board is still not initialized
+  if (!board?.[0]?.[0]) {
+    return <div>Loading chess board...</div>;
+  }
 
   const handleSquareClick = (row: number, col: number) => {
     const piece = board[row][col];

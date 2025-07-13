@@ -37,22 +37,24 @@ const StarRating: React.FC<StarRatingProps> = ({
             title={`${value} stars`}
             placement="top"
           >
-            <IconButton
-              onClick={() => handleRate(value)}
-              onMouseEnter={() => setHover(value)}
-              onMouseLeave={() => setHover(null)}
-              size={size}
-              disabled={disabled}
-              sx={{
-                color: '#ffd700',
-                '&:hover': {
-                  backgroundColor: 'transparent',
+            <span>
+              <IconButton
+                onClick={() => handleRate(value)}
+                onMouseEnter={() => setHover(value)}
+                onMouseLeave={() => setHover(null)}
+                size={size}
+                disabled={disabled}
+                sx={{
                   color: '#ffd700',
-                },
-              }}
-            >
-              {value <= (hover || rating) ? <Star /> : <StarBorder />}
-            </IconButton>
+                  '&:hover': {
+                    backgroundColor: 'transparent',
+                    color: '#ffd700',
+                  },
+                }}
+              >
+                {value <= (hover || rating) ? <Star /> : <StarBorder />}
+              </IconButton>
+            </span>
           </Tooltip>
         );
       })}
