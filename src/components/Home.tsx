@@ -246,7 +246,7 @@ const HomeComponent: FC<HomeProps> = ({ id }) => {
               >
                 {/* Add content here */}
                 <img 
-                  src="/DSC03682.JPG" 
+                  src={process.env.PUBLIC_URL + '/DSC03682.JPG'} 
                   alt="Profile" 
                   style={{
                     width: '100%',

@@ -20,26 +20,27 @@ const Analytics: React.FC<AnalyticsProps> = ({ id }) => {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        const response = await fetch('https://plausible.io/api/v1/stats/aggregate', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            site_id: 'your-site-id',
-            period: '30d',
-            metrics: ['visitors', 'pageviews', 'visit_duration'],
-          }),
-        });
-        const data = await response.json();
-        setStats({
-          totalVisits: data.visitors,
-          uniqueVisitors: data.unique_visitors,
-          averageTime: data.average_visit_duration,
-          pageViews: {}, // We'll need to implement page views separately
-        });
+        // For now, we'll use mock data since we don't have a real Plausible Analytics setup
+        const mockData = {
+          totalVisits: 1000,
+          uniqueVisitors: 750,
+          averageTime: '00:03:45',
+          pageViews: {},
+        };
+        
+        // Simulate a delay for better UX
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setStats(mockData);
       } catch (error) {
         console.error('Error fetching analytics:', error);
+        setStats({
+          totalVisits: 0,
+          uniqueVisitors: 0,
+          averageTime: '00:00',
+          pageViews: {},
+        });
+      } finally {
+        setIsLoading(false);
       }
     };
 

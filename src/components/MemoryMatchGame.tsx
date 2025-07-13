@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from './MemoryMatchGame.module.scss';
 import StarRating from './StarRating';
 
@@ -75,17 +75,17 @@ const MemoryMatchGame: React.FC = () => {
   }, [cards]);
 
   // Reset game
-  const resetGame = () => {
+  const resetGame = useCallback(() => {
     const newCards = createCards();
     setCards(newCards);
     setFlippedCards([]);
     setMoves(0);
     setGameOver(false);
-  };
+  }, []);
 
   useEffect(() => {
     resetGame();
-  }, []);
+  }, [resetGame]);
 
   return (
     <div className={styles['memory-match']}>
