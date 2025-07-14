@@ -216,7 +216,7 @@ const ChessBoard: React.FC<ChessBoardProps> = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className={styles.chessboard}>
-        <h2>Chess Game</h2>
+        <h2 className={styles['chessboard__header__h2']}>Take a break and play Chess Game</h2>
 
         <div className={styles['chessboard__board']}>
           {board.map((row, rowIndex) => (
