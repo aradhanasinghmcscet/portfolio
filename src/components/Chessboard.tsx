@@ -1,27 +1,29 @@
-import React, { useState } from 'react';
-import styles from '../styles/components/chessboard.module.scss'
-import { isValidMove } from '../utils/chessRules';
-// import { useDrag, useDrop } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import React from 'react';
+import styles from '../styles/components/chessboard.module.scss';
+import { isValidMove, getGameStatus, getSuggestedMoves } from '../utils/chessRules';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store/store';
-import { 
-  initializeBoard, 
-  selectPiece, 
-  movePiece, 
-  setHoverPosition, 
-  resetBoard, 
-  undoMove
+import { RootState, AppDispatch } from '../store/store';
+import { ChessState } from '../store/chessSlice';
+import {
+  selectPiece,
+  movePiece,
+  setBoard,
+  resetBoard,
+  initializeBoard,
+  undoMove,
+  setGameStatus,
+  ChessPiece,
+  setHoverPosition,
+  SelectedPiecePosition
 } from '../store/chessSlice';
 import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import Row from './Row';
-import StarRating from './StarRating';
-import { Container } from '@mui/material';
 
 
 
 interface ChessBoardProps {
-  id: string;
+  id?: string;
 }
 
 interface TouchData {
@@ -32,92 +34,94 @@ interface TouchData {
   col: number;
 }
 
-const ChessBoard: React.FC<ChessBoardProps> = ({ id }) => {
-  const [rating, setRating] = useState<number>(0);
-  const dispatch = useDispatch();
+const ChessBoard: React.FC<ChessBoardProps> = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const chessState = useSelector((state: RootState) => state.chess);
-  const [touches, setTouches] = React.useState<{ [key: number]: TouchData }>({});
+  const {
+    board,
+    selectedPiece,
+    isWhiteTurn,
+    hoverPosition,
+    moveHistory,
+    gameStatus,
+    halfMoveClock,
+    fullMoveNumber
+  } = useSelector((state: RootState) => state.chess);
 
-  // Initialize board on component mount
+  const [touches, setTouches] = React.useState<Record<number, TouchData>>({});
+
   React.useEffect(() => {
-    if (!chessState.board?.[0]?.[0]) {
+    // Initialize board only if it's not already initialized
+    if (!board?.[0]?.[0]) {
       dispatch(initializeBoard());
     }
-  }, [dispatch, chessState.board]);
+    dispatch(setGameStatus('in-progress'));
+  }, [dispatch, board]);
 
-  // Log board state for debugging
   React.useEffect(() => {
-    console.log('Board state:', chessState.board);
-  }, [chessState.board]);
-
-  // Destructure state after initialization
-  const { board, selectedPiece, hoverPosition, isWhiteTurn, moveHistory, capturedPieces } = chessState;
-
-  // Handle case where board is still not initialized
-  if (!board?.[0]?.[0]) {
-    return <div>Loading chess board...</div>;
-  }
+    if (board?.[0]?.[0]) { // Only check game status if board is initialized
+      const gameState = {
+        board,
+        isWhiteTurn,
+        moveHistory,
+        halfMoveClock,
+        fullMoveNumber
+      };
+      const gameStatus = getGameStatus(gameState, isWhiteTurn ? 'white' : 'black');
+      
+      // Convert GameStatus object to string status
+      let status: 'in-progress' | 'check' | 'checkmate' | 'stalemate' | 'draw' = 'in-progress';
+      if (gameStatus.isCheckmate) status = 'checkmate';
+      else if (gameStatus.isStalemate) status = 'stalemate';
+      else if (gameStatus.isDraw) status = 'draw';
+      else if (gameStatus.isCheck) status = 'check';
+      
+      dispatch(setGameStatus(status));
+    }
+  }, [board, isWhiteTurn, moveHistory, halfMoveClock, fullMoveNumber, dispatch]);
 
   const handleSquareClick = (row: number, col: number) => {
-    const piece = board[row][col];
-    
-    if (!piece) {
-      // If no piece selected, clear selection
-      if (!selectedPiece) {
-        dispatch(setHoverPosition({ row: -1, col: -1 }));
-        return;
-      }
-
-      // If piece selected, try to move it
-      const fromPosition = selectedPiece;
-      const toPosition = { row, col };
-      const movingPiece = board[fromPosition.row][fromPosition.col];
-      
-      if (movingPiece && isValidMove(fromPosition, toPosition, board, movingPiece)) {
-        dispatch(movePiece(toPosition));
-      }
-      dispatch(setHoverPosition({ row: -1, col: -1 }));
+    const clickedPiece = board[row][col];
+  
+    if (clickedPiece && clickedPiece.color === (isWhiteTurn ? 'white' : 'black')) {
+      dispatch(selectPiece({ row, col }));
       return;
     }
-
-    // Only select pieces of the current player's color
-    if (piece.color === (isWhiteTurn ? 'white' : 'black')) {
-      dispatch(selectPiece({ row, col }));
-      dispatch(setHoverPosition(null));
+  
+    if (selectedPiece) {
+      const piece = board[selectedPiece.row][selectedPiece.col];
+      if (piece && isValidMove(selectedPiece, { row, col }, board, piece)) {
+        const targetPiece = board[row][col];
+        console.log("Trying move", selectedPiece, "->", { row, col }, "Is valid:", isValidMove(selectedPiece, { row, col }, board, piece));
+        
+        // Create new board state with the move applied
+        const newBoard = board.map(row => [...row]);
+        newBoard[row][col] = piece;
+        newBoard[selectedPiece.row][selectedPiece.col] = null;
+        
+        dispatch(movePiece({
+          from: selectedPiece,
+          to: { row, col },
+          piece,
+          capturedPiece: targetPiece,
+          board: newBoard
+        }));
+      }
+  
+      // ✅ Deselect by setting null
+      dispatch(selectPiece(null));
     }
   };
-
-  const handleSquareDoubleClick = (row: number, col: number) => {
-    const piece = board[row][col];
-    
-    if (!piece) return;
-    
-    // Get the current selected piece
-    const selected = selectedPiece || { row: -1, col: -1 };
-    const fromPiece = board[selected.row][selected.col];
-    
-    if (fromPiece && isValidMove(selected, { row, col }, board, fromPiece)) {
-      // Create a copy of the board state to check for captures
-      // const boardCopy = JSON.parse(JSON.stringify(board));
-      // const capturedPiece = boardCopy[row][col];
-      
-      dispatch(movePiece({ row, col }));
-    }
-    dispatch(setHoverPosition({ row: -1, col: -1 }));
-  };
+  
 
   const handleTouchStart = (row: number, col: number, e: React.TouchEvent<HTMLDivElement>) => {
-    const now = Date.now();
     const touch = e.touches[0];
-    const touchId = touch.identifier;
-    
-    // Store touch information
     setTouches(prev => ({
       ...prev,
-      [touchId]: {
+      [touch.identifier]: {
         x: touch.clientX,
         y: touch.clientY,
-        timestamp: now,
+        timestamp: Date.now(),
         row,
         col
       }
@@ -126,112 +130,124 @@ const ChessBoard: React.FC<ChessBoardProps> = ({ id }) => {
 
   const handleTouchEnd = (row: number, col: number, e: React.TouchEvent<HTMLDivElement>) => {
     const touch = e.changedTouches[0];
-    const touchId = touch.identifier;
-    const touchData = touches[touchId];
-    
-    if (touchData && Date.now() - touchData.timestamp < 300) {
-      // Double tap detected
-      handleSquareDoubleClick(row, col);
-    } else {
-      // Single tap
+    const data = touches[touch.identifier];
+    if (data && Date.now() - data.timestamp < 300) {
       handleSquareClick(row, col);
     }
-    
-    // Clean up touch data
     setTouches(prev => {
-      const newTouches = { ...prev };
-      delete newTouches[touchId];
-      return newTouches;
+      const copy = { ...prev };
+      delete copy[touch.identifier];
+      return copy;
     });
   };
 
-  const handleReset = () => {
-    dispatch(resetBoard());
+  const handleMouseEnter = (row: number, col: number) => {
+    if (selectedPiece) {
+      const piece = board[selectedPiece.row][selectedPiece.col];
+      if (piece && isValidMove(selectedPiece, { row, col }, board, piece)) {
+        dispatch(setHoverPosition({ row, col }));
+      }
+    }
+  };
+  const handleMouseLeave = () => {
+    dispatch(setHoverPosition(null));
+  };
+  
+  const handleKeyDown = (e: KeyboardEvent) => {
+    const r = selectedPiece?.row ?? 0;
+    const c = selectedPiece?.col ?? 0;
+    let newRow = r, newCol = c;
+
+    switch (e.key) {
+      case 'ArrowUp': newRow = Math.max(0, r - 1); break;
+      case 'ArrowDown': newRow = Math.min(7, r + 1); break;
+      case 'ArrowLeft': newCol = Math.max(0, c - 1); break;
+      case 'ArrowRight': newCol = Math.min(7, c + 1); break;
+      case 'Enter':
+        if (selectedPiece) {
+          const piece = board[r][c];
+          if (piece && isValidMove(selectedPiece, { row: newRow, col: newCol }, board, piece)) {
+            const target = board[newRow][newCol];
+            dispatch(movePiece({
+              from: selectedPiece,
+              to: { row: newRow, col: newCol },
+              piece,
+              capturedPiece: target,
+              board: chessState.board
+            }));
+            dispatch(selectPiece({ row: -1, col: -1 }));
+          }
+        }
+        break;
+      case 'Escape':
+        dispatch(selectPiece({ row: -1, col: -1 }));
+        break;
+    }
+
+    if ((newRow !== r || newCol !== c) && board[newRow][newCol]?.color === (isWhiteTurn ? 'white' : 'black')) {
+      dispatch(selectPiece({ row: newRow, col: newCol }));
+      dispatch(setHoverPosition({ row: newRow, col: newCol }));
+    }
   };
 
-  const handleBack = () => {
-    dispatch(undoMove());
+  React.useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedPiece, board]);
+
+  const getStatusText = () => {
+    switch (gameStatus) {
+      case 'check': return 'Check!';
+      case 'checkmate': return 'Checkmate!';
+      case 'stalemate': return 'Stalemate!';
+      case 'draw': return 'Draw!';
+      default: return '';
+    }
   };
 
-  // const handleKeyDown = (event: React.KeyboardEvent, row: number, col: number) => {
-  //   if (event.key === 'Escape') {
-  //     dispatch(setHoverPosition({ row: -1, col: -1 }));
-  //   }
-  // };
+  const suggestedSquares = React.useMemo(() => {
+    if (!selectedPiece) return [];
+    const piece = board[selectedPiece.row][selectedPiece.col];
+    if (!piece) return [];
+    
+    return getSuggestedMoves(selectedPiece, board, piece);
+  }, [selectedPiece, board]);
 
   return (
     <DndProvider backend={HTML5Backend}>
-        <Container  maxWidth="lg" sx={{ py: 8 }} className='chessboard__container'>
-      <div className="chessboard__stars">
-        <div className="chessboard__header">
-          <h2>Let's take a break and play Chess Game</h2>
-        </div>
-        <StarRating
-          initialValue={rating}
-          onRate={setRating}
-          size="medium"
-        />
-      </div>
-      <div className="chessboard">
-        <div className="chessboard__controls">
-          <button 
-            className="chessboard__button"
-            onClick={handleReset}
-          >
-            Reset
-          </button>
-          <button 
-            className="chessboard__button"
-            onClick={handleBack}
-            disabled={moveHistory.length === 0}
-          >
-            Back
-          </button>
-          <button 
-            className="chessboard__button"
-            onClick={() => {}}
-            disabled={moveHistory.length === 0}
-          >
-            Forward
-          </button>
-        </div>
-        <div className={styles['chessboard__captured']}>
-          <div className={styles['chessboard__captured--white']}>
-            {capturedPieces.white.map((piece, index) => (
-              <div
-                key={index}
-                className={`${styles['chessboard__captured__piece']} ${styles[`chessboard__piece--${piece.color}-${piece.type}`]}`}
-              />
-            ))}
-          </div>
-          <div className={styles['chessboard__captured--black']}>
-            {capturedPieces.black.map((piece, index) => (
-              <div
-                key={index}
-                className={`${styles['chessboard__captured__piece']} ${styles[`chessboard__piece--${piece.color}-${piece.type}`]}`}
-              />
-            ))}
-          </div>
-        </div>
-        <div className={styles['chessboard__grid']}>
+      <div className={styles.chessboard}>
+        <h2>Chess Game</h2>
+
+        <div className={styles['chessboard__board']}>
           {board.map((row, rowIndex) => (
             <Row
               key={rowIndex}
               rowIndex={rowIndex}
+              board={board}
               selectedPiece={selectedPiece}
               handleSquareClick={handleSquareClick}
-              handleSquareDoubleClick={handleSquareDoubleClick}
+              onMouseEnter={(row: number, col: number) => handleMouseEnter(row, col)}
+              onMouseLeave={handleMouseLeave}
+              handleSquareDoubleClick={handleSquareClick} 
               handleTouchStart={handleTouchStart}
               handleTouchEnd={handleTouchEnd}
-              setHoverPosition={setHoverPosition}
               hoverPosition={hoverPosition}
-              board={board}
               isWhiteTurn={isWhiteTurn}
-            />
+              suggestedMoves={suggestedSquares} 
+              setHoverPosition={(position: SelectedPiecePosition | null) => dispatch(setHoverPosition(position))}      
+                    />
           ))}
         </div>
+
+        <div className={styles['chessboard__controls']}>
+          <button onClick={() => dispatch(resetBoard())}>Reset Game</button>
+          <button onClick={() => dispatch(undoMove())} disabled={moveHistory.length === 0}>Undo</button>
+        </div>
+
+        <div className={styles['chessboard__status']}>
+          {isWhiteTurn ? 'White to move' : 'Black to move'} | {getStatusText()}
+        </div>
       </div>
-      </Container>
     </DndProvider>
   );
 };

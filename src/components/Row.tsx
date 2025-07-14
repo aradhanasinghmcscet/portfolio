@@ -3,6 +3,16 @@ import { SelectedPiecePosition, ChessPiece } from '../store/chessSlice';
 import styles from '../styles/components/chessboard.module.scss';
 import { isValidMove } from '../utils/chessRules';
 
+// Unicode chess piece characters
+const PIECE_ICONS = {
+  white: {
+    pawn: '♙', rook: '♖', knight: '♘', bishop: '♗', queen: '♕', king: '♔'
+  },
+  black: {
+    pawn: '♟', rook: '♜', knight: '♞', bishop: '♝', queen: '♛', king: '♚'
+  }
+};
+
 interface RowProps {
   rowIndex: number;
   selectedPiece: SelectedPiecePosition | null;
@@ -14,6 +24,9 @@ interface RowProps {
   hoverPosition: SelectedPiecePosition | null;
   board: (ChessPiece | null)[][];
   isWhiteTurn: boolean;
+  suggestedMoves: { row: number; col: number }[];
+  onMouseEnter?: (row: number, col: number) => void; // ✅ add this
+  onMouseLeave?: () => void;   
 }
 
 const Row: React.FC<RowProps> = ({
@@ -48,8 +61,8 @@ const Row: React.FC<RowProps> = ({
           <div
             key={colIndex}
             className={squareClasses}
-            onClick={(e) => handleSquareClick(rowIndex, colIndex)}
-            onDoubleClick={(e) => handleSquareDoubleClick(rowIndex, colIndex)}
+            onClick={() => handleSquareClick(rowIndex, colIndex)}
+            onDoubleClick={() => handleSquareDoubleClick(rowIndex, colIndex)}
             onTouchStart={(e) => handleTouchStart(rowIndex, colIndex, e)}
             onTouchEnd={(e) => handleTouchEnd(rowIndex, colIndex, e)}
             tabIndex={0}
@@ -61,7 +74,9 @@ const Row: React.FC<RowProps> = ({
             }}
           >
             {piece && (
-              <div className={`${styles['chessboard__piece']} ${styles[`chessboard__piece--${piece.color}-${piece.type}`]}`} />
+              <div className={`${styles['chessboard__piece']} ${styles[piece.color]} ${styles[piece.type]}`}>
+                {PIECE_ICONS[piece.color][piece.type as keyof typeof PIECE_ICONS['white']]}
+              </div>
             )}
           </div>
         );

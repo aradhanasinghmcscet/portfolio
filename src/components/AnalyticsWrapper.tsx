@@ -6,9 +6,18 @@ interface AnalyticsWrapperProps {
 
 const AnalyticsWrapper: React.FC<AnalyticsWrapperProps> = ({ children }) => {
   useEffect(() => {
+    // Initialize Plausible if not already initialized
+    if (!window.plausible) {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://plausible.io/js/plausible.js';
+      script.setAttribute('data-domain', 'your-domain.com'); // Replace with your actual domain
+      document.head.appendChild(script);
+    }
+
     // Track pageview
-    if ((window as any).plausible) {
-      (window as any).plausible('pageview');
+    if (window.plausible) {
+      window.plausible('pageview');
     }
   }, []);
 
