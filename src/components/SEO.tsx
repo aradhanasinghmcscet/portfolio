@@ -21,7 +21,7 @@ const SEO: React.FC<SeoProps> = ({
   canonical = 'https://aradhana-portfolio.com'
 }) => {
   const siteTitle = title ? `${title} | ${author}` : `${author} - Portfolio`;
-  const siteDescription = description || 'Full Stack Developer | Portfolio Website';
+  const siteDescription = description || 'Full Stack Developer | Portfolio Website | Chess Game | tic tac toe | memory match game';
   const siteImage = image || '/images/profile.jpg';
   const siteUrl = url || canonical;
 

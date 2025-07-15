@@ -1,5 +1,5 @@
 
-import { Box, Typography, Grid, Container, Button, useTheme, useMediaQuery, Card, CardContent} from '@mui/material';
+import { Box, Typography, Grid, Container, Button, useTheme, useMediaQuery, Card, CardContent } from '@mui/material';
 import { motion } from 'framer-motion';
 import { FC } from 'react';
 import { styled } from '@mui/material/styles';
@@ -36,7 +36,7 @@ const StyledSubtitle = styled(Typography)(({ theme }) => ({
   },
 }));
 
-const StyledButton = styled(Button)(({ theme }) => ({
+const StyledButton = styled(Button)<{ onClick?: () => void }>(({ theme }) => ({
   textTransform: 'none',
   borderRadius: '25px',
   padding: '0.75rem 2rem',
@@ -86,7 +86,7 @@ const HomeComponent: FC<HomeProps> = ({ id }) => {
 
       <StyledContainer>
         <Grid container spacing={4} alignItems="center">
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={8} lg={6} xl={6} mt={20}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -170,6 +170,38 @@ const HomeComponent: FC<HomeProps> = ({ id }) => {
                         </Card>
                       </motion.div>
                     </Grid>
+                    
+                    {/* MERN & Python/Django Card */}
+                    <Grid item xs={12} sm={6}>
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                      >
+                        <Card 
+                          sx={{ 
+                            backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                            backdropFilter: 'blur(4px)',
+                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            borderRadius: 2,
+                            transition: 'transform 0.3s ease',
+                            '&:hover': {
+                              transform: 'translateY(-5px)',
+                              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+                            }
+                          }}
+                        >
+                          <CardContent>
+                            <Typography variant="h6" sx={{ mb: 2, color: 'white' }}>
+                              MERN & Python/Django
+                            </Typography>
+                            <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.85)' }}>
+                              Expert in full-stack development with MongoDB, Express, React, Node.js, and Python/Django frameworks
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </motion.div>
+                    </Grid>
 
                     {/* UX Principles Card */}
                     <Grid item xs={12} sm={6}>
@@ -202,6 +234,38 @@ const HomeComponent: FC<HomeProps> = ({ id }) => {
                         </Card>
                       </motion.div>
                     </Grid>
+                    
+                    {/* AWS Experience Card */}
+                    <Grid item xs={12} sm={6}>
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6, delay: 0.5 }}
+                      >
+                        <Card 
+                          sx={{ 
+                            backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                            backdropFilter: 'blur(4px)',
+                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            borderRadius: 2,
+                            transition: 'transform 0.3s ease',
+                            '&:hover': {
+                              transform: 'translateY(-5px)',
+                              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+                            }
+                          }}
+                        >
+                          <CardContent>
+                            <Typography variant="h6" sx={{ mb: 2, color: 'white' }}>
+                              AWS Experience
+                            </Typography>
+                            <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.85)' }}>
+                              Proficient in AWS services including EC2, S3, RDS, Lambda, and CloudFormation
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </motion.div>
+                    </Grid>
                   </Grid>
                 </Box>
               </Box>
@@ -214,6 +278,12 @@ const HomeComponent: FC<HomeProps> = ({ id }) => {
                 <StyledButton
                   variant="contained"
                   size={isMobile ? 'small' : 'large'}
+                  onClick={() => {
+                    const projectsElement = document.getElementById('projects');
+                    if (projectsElement) {
+                      projectsElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
                   sx={{
                     backgroundColor: 'white',
                     color: 'primary.main',
