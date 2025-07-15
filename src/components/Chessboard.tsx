@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box, Button } from '@mui/material';
 import styles from '../styles/components/chessboard.module.scss';
 import { isValidMove, getGameStatus, getSuggestedMoves } from '../utils/chessRules';
 import { useDispatch, useSelector } from 'react-redux';
@@ -217,6 +218,81 @@ const ChessBoard: React.FC<ChessBoardProps> = () => {
     <DndProvider backend={HTML5Backend}>
       <div className={styles.chessboard}>
         <h2 className={styles['chessboard__header__h2']}>Take a break and play Chess Game</h2>
+        <Box sx={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          gap: 2,
+          mb: 2
+        }}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => dispatch(resetBoard())}
+            sx={{
+              textTransform: 'none',
+              borderRadius: '25px',
+              padding: '0.75rem 2rem',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              color: 'white',
+              '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+              },
+            }}
+          >
+            Reset Game
+          </Button>
+
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => dispatch(undoMove())}
+            disabled={moveHistory.length === 0}
+            sx={{
+              textTransform: 'none',
+              borderRadius: '25px',
+              padding: '0.75rem 2rem',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              color: 'white',
+              '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+              },
+            }}
+          >
+            Undo Move
+          </Button>
+
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              const lastMove = moveHistory[moveHistory.length - 2];
+              if (lastMove) {
+                dispatch(setBoard(lastMove.board));
+                dispatch({ type: 'chess/setIsWhiteTurn', payload: !isWhiteTurn });
+              }
+            }}
+            disabled={moveHistory.length < 2}
+            sx={{
+              textTransform: 'none',
+              borderRadius: '25px',
+              padding: '0.75rem 2rem',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              color: 'white',
+              '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+              },
+            }}
+          >
+            Redo Move
+          </Button>
+        </Box>
+
 
         <div className={styles['chessboard__board']}>
           {board.map((row, rowIndex) => (
@@ -239,11 +315,7 @@ const ChessBoard: React.FC<ChessBoardProps> = () => {
           ))}
         </div>
 
-        <div className={styles['chessboard__controls']}>
-          <button onClick={() => dispatch(resetBoard())}>Reset Game</button>
-          <button onClick={() => dispatch(undoMove())} disabled={moveHistory.length === 0}>Undo</button>
-        </div>
-
+       
         <div className={styles['chessboard__status']}>
           {isWhiteTurn ? 'White to move' : 'Black to move'} | {getStatusText()}
         </div>

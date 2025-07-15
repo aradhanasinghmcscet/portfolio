@@ -7,8 +7,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { useDispatch } from 'react-redux';
 import { incrementClick } from './store/clickCounterSlice';
-import SEO
- from './components/SEO';
+import SEO from './components/SEO';
 import AnalyticsWrapper from './components/AnalyticsWrapper';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
