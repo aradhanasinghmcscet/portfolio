@@ -13,13 +13,13 @@ A modern, interactive portfolio website showcasing my expertise in UI/UX, Fronte
 
 
 ## Getting Started
-
+You can view the live website at https://aradhana-singh-tech-odyssey.github.io/portfolio
 
 ### Setup Instructions
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/portfolio.git
+git clone https://github.com/aradhana-singh-tech-odyssey/portfolio.git
 cd portfolio
 ```
 
