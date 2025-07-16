@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { AnalyticsService } from '../services/analyticsService';
 import { Box, Grid, Paper, Typography, Container, LinearProgress } from '@mui/material';
 import { motion } from 'framer-motion';
 import type { AnalyticsData } from '../types';
@@ -20,17 +21,9 @@ const Analytics: React.FC<AnalyticsProps> = ({ id }) => {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        // For now, we'll use mock data since we don't have a real Plausible Analytics setup
-        const mockData = {
-          totalVisits: 1000,
-          uniqueVisitors: 750,
-          averageTime: '00:03:45',
-          pageViews: {},
-        };
-        
-        // Simulate a delay for better UX
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setStats(mockData);
+        const analytics = AnalyticsService.getInstance();
+        const analyticsData = analytics.getAnalyticsData();
+        setStats(analyticsData);
       } catch (error) {
         console.error('Error fetching analytics:', error);
         setStats({

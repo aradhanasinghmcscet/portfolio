@@ -1,10 +1,44 @@
 import React from 'react';
 import { Box, Typography, Paper, Container, Chip } from '@mui/material';
 import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, TimelineOppositeContent } from '@mui/lab';
+import styled from '@mui/material/styles/styled';
 import { motion } from 'framer-motion';
 import type { Experience } from '../types';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+
+const StyledContainer = styled(Container)(({ theme }) => ({
+  maxWidth: '1400px',
+  padding: '2rem',
+}));
+
+const StyledTimelineSeparator = styled(TimelineSeparator)({
+  '& .MuiTimelineSeparator-dot': {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+    transform: 'rotateX(45deg)',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+  },
+  '& .MuiTimelineSeparator-connector': {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+    transition: 'box-shadow 0.3s ease',
+  },
+});
+
+const StyledTimelineContent = styled(TimelineContent)({
+  '&:hover': {
+    '& + .MuiTimelineSeparator-root': {
+      '& .MuiTimelineSeparator-dot': {
+        transform: 'rotateX(45deg) scale(1.1)',
+        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)',
+      },
+      '& .MuiTimelineSeparator-connector': {
+        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)',
+      },
+    },
+  },
+});
 
 const experiences: Experience[] = [
   {
@@ -79,11 +113,11 @@ const ExperienceComponent: React.FC<ExperienceProps> = ({ id }) => {
                     {exp.period}
                   </Typography>
                 </TimelineOppositeContent>
-                <TimelineSeparator>
+                <StyledTimelineSeparator>
                   <TimelineDot color="primary" />
                   <TimelineConnector />
-                </TimelineSeparator>
-                <TimelineContent>
+                </StyledTimelineSeparator>
+                <StyledTimelineContent>
                   <Paper elevation={3} sx={{ p: 3 }}>
                     <Typography variant="h6" gutterBottom>
                       {exp.role}
@@ -100,7 +134,7 @@ const ExperienceComponent: React.FC<ExperienceProps> = ({ id }) => {
                       ))}
                     </Box>
                   </Paper>
-                </TimelineContent>
+                </StyledTimelineContent>
               </TimelineItem>
             ))}
           </Timeline>
