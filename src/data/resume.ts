@@ -178,13 +178,13 @@ export const resumeData = {
       ] as const
     } as const,
     {
-      title: "Home Lending Platform",
+      title: "Business & Home Lending Platform",
       description: [
         "Enterprise-grade platform for home loan processing and management"
       ] as const,
       technologies: ["JavaScript", "Spring Boot", "Python", "Cypress", "Splunk", "Adobe Analytics"] as const,
       achievements: [
-        "Modernized legacy home loan processing system",
+        "Modernized legacy Business and Home loan processing system",
         "Implemented AI-driven loan eligibility assessment",
         "Enhanced customer experience with personalized dashboards",
         "Integrated with multiple banking systems",
