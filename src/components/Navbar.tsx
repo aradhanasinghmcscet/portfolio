@@ -2,8 +2,8 @@ import React from 'react';
 import { Box, AppBar, Toolbar, Typography, IconButton, Button, Drawer, List, ListItem, ListItemIcon, ListItemText} from '@mui/material';
 import { Menu as MenuIcon, Close as CloseIcon, Home as HomeIcon, School as SchoolIcon, Work as WorkIcon, Code as CodeIcon, Mail as MailIcon, Analytics as AnalyticsIcon, Games as ChessIcon } from '@mui/icons-material';
 
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../store/store';
 
 interface MenuItem {
   text: string;
@@ -41,7 +41,7 @@ const Navbar: React.FC<NavbarProps> = ({ activeSection, isScrolled }) => {
   };
 
 
-  const clickCount = useSelector((state: RootState) => state.clickCounter.count);
+  // const clickCount = useSelector((state: RootState) => state.clickCounter.count);
 
   return (
     <Box sx={{ flexGrow: 1 }}>

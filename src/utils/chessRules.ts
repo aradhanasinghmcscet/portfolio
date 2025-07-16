@@ -1,6 +1,8 @@
 // utils/chessRules.ts
 
-import { ChessPiece, PieceType, PieceColor, Move } from '../store/chessSlice';
+import { ChessPiece,
+  //  PieceType, 
+   PieceColor, Move } from '../store/chessSlice';
 
 export type ChessPosition = { row: number; col: number };
 

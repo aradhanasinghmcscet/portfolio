@@ -4,7 +4,7 @@ import styles from '../styles/components/chessboard.module.scss';
 import { isValidMove, getGameStatus, getSuggestedMoves } from '../utils/chessRules';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../store/store';
-import { ChessState } from '../store/chessSlice';
+// import { ChessState } from '../store/chessSlice';
 import {
   selectPiece,
   movePiece,
@@ -13,7 +13,7 @@ import {
   initializeBoard,
   undoMove,
   setGameStatus,
-  ChessPiece,
+  // ChessPiece,
   setHoverPosition,
   SelectedPiecePosition
 } from '../store/chessSlice';

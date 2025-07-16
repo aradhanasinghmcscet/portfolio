@@ -7,10 +7,10 @@ import type { Experience } from '../types';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-const StyledContainer = styled(Container)(({ theme }) => ({
-  maxWidth: '1400px',
-  padding: '2rem',
-}));
+// const StyledContainer = styled(Container)(({ theme }) => ({
+//   maxWidth: '1400px',
+//   padding: '2rem',
+// }));
 
 const StyledTimelineSeparator = styled(TimelineSeparator)({
   '& .MuiTimelineSeparator-dot': {
